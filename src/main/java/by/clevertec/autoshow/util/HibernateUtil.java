@@ -1,6 +1,11 @@
 package by.clevertec.autoshow.util;
 
 
+import by.clevertec.autoshow.entity.Car;
+import by.clevertec.autoshow.entity.CarShowroom;
+import by.clevertec.autoshow.entity.Category;
+import by.clevertec.autoshow.entity.Client;
+import by.clevertec.autoshow.entity.Review;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
@@ -17,6 +22,11 @@ public class HibernateUtil {
         try {
             sessionFactory = new Configuration()
                     .configure("hibernate.cfg.xml")
+                    .addAnnotatedClass(Car.class)
+                    .addAnnotatedClass(CarShowroom.class)
+                    .addAnnotatedClass(Category.class)
+                    .addAnnotatedClass(Client.class)
+                    .addAnnotatedClass(Review.class)
                     .buildSessionFactory();
         } catch (Exception e) {
             throw new ExceptionInInitializerError(e);
