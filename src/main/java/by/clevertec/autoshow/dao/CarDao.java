@@ -14,4 +14,10 @@ public interface CarDao extends CommonDao {
     default Car findById(long id) throws DaoException {
         return findById(id, Car.class);
     }
+
+    List<Car> findCarsByFilters(String brand, String category, int year, double minPrice, double maxPrice) throws DaoException;
+
+    List<Car> findAllCarsOrderByPriceAsc() throws DaoException;
+
+    List<Car> findAllCarsOrderByPriceDesc() throws DaoException;
 }

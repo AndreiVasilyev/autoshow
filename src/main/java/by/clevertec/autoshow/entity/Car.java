@@ -49,7 +49,7 @@ public class Car {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
@@ -58,14 +58,14 @@ public class Car {
     private CarShowroom carShowroom;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    @Builder.Default
     @ToString.Exclude
+    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToMany(mappedBy = "cars",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            fetch = FetchType.LAZY)
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
     @ToString.Exclude
     @Builder.Default
-    private List<Client> client = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 }
