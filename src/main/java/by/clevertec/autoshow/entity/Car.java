@@ -20,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,7 +44,7 @@ public class Car {
     private String brand;
 
     @Column(name = "year")
-    private Byte year;
+    private Integer year;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -56,9 +57,15 @@ public class Car {
     @JoinColumn(name = "car_showroom_id")
     private CarShowroom carShowroom;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cars", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Client> clients;
+    @ManyToMany(mappedBy = "cars",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @Builder.Default
+    private List<Client> client = new ArrayList<>();
 }

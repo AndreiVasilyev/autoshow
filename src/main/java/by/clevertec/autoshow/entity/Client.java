@@ -22,6 +22,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,23 +47,29 @@ public class Client {
     private String name;
 
     @ElementCollection
-    @CollectionTable(name = "contacts", joinColumns = @JoinColumn(name = "contact_id"))
-    @Column(name = "contacts")
-    private Set<String> contacts;
+    @CollectionTable(name = "contacts", joinColumns = @JoinColumn(name = "client_id"))
+    @Column(name = "contact")
+    @Builder.Default
+    private Set<String> contacts = new HashSet<>();
 
     @Column(name = "registered")
-    private LocalDate registered;
+    private LocalDateTime registered;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
     @JoinTable(
             name = "clients_cars",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "car_id")
     )
-    private List<Car> cars;
+    @Builder.Default
+    @ToString.Exclude
+    private List<Car> cars = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
+    @ToString.Exclude
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
 
 
 }

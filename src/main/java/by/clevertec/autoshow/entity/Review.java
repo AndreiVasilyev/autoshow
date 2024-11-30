@@ -34,13 +34,13 @@ public class Review {
     private String text;
 
     @Column(name = "rate")
-    private Byte rate;
+    private Integer rate;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "car_id", nullable = false)
+    @JoinColumn(name = "car_id")
     private Car car;
 }

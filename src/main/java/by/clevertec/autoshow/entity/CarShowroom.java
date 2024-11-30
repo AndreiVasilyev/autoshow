@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,8 +39,9 @@ public class CarShowroom {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "carShowroom", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Car> cars;
-
+    @OneToMany(mappedBy = "carShowroom", cascade = CascadeType.ALL)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Car> cars = new ArrayList<>();
 
 }
