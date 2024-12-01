@@ -55,7 +55,8 @@ public class Client {
     @Column(name = "registered")
     private LocalDateTime registered;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH}, fetch = FetchType.EAGER
             )
     @JoinTable(
             name = "clients_cars",

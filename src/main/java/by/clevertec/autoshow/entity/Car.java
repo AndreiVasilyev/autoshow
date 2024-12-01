@@ -63,7 +63,8 @@ public class Car {
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToMany(mappedBy = "cars",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.EAGER
     )
     @ToString.Exclude
     @Builder.Default
