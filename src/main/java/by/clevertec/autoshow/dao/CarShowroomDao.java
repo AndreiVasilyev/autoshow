@@ -14,4 +14,8 @@ public interface CarShowroomDao extends CommonDao {
     default CarShowroom findById(long id) throws DaoException {
         return findById(id, CarShowroom.class);
     }
+
+    List<CarShowroom> findAllWithEntityGraph() throws DaoException;
+
+    List<CarShowroom> findAllWithJoinFetch() throws DaoException;
 }

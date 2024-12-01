@@ -61,4 +61,14 @@ public class CarServiceImpl implements CarService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Car> findAllCars(int pageNumber, int pageSize) throws ServiceException {
+        CarDao carDao = CarDaoImpl.getInstance();
+        try {
+            return carDao.findAllCars(pageNumber, pageSize);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

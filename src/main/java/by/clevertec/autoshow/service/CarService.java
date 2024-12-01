@@ -17,4 +17,6 @@ public interface CarService {
     List<Car> findAllCarsOrderByPriceAsc() throws ServiceException;
 
     List<Car> findAllCarsOrderByPriceDesc() throws ServiceException;
+
+    List<Car> findAllCars(int pageNumber, int pageSize) throws ServiceException;
 }

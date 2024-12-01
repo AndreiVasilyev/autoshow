@@ -20,4 +20,6 @@ public interface CarDao extends CommonDao {
     List<Car> findAllCarsOrderByPriceAsc() throws DaoException;
 
     List<Car> findAllCarsOrderByPriceDesc() throws DaoException;
+
+    List<Car> findAllCars(int pageNumber, int pageSize) throws DaoException;
 }

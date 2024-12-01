@@ -6,6 +6,11 @@ import by.clevertec.autoshow.exception.DaoException;
 import by.clevertec.autoshow.util.HibernateUtil;
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Fetch;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Root;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +26,7 @@ public class CarShowroomDaoImpl implements CarShowroomDao {
     private static final CarShowroomDao instance = new CarShowroomDaoImpl();
 
     @Override
-    public List<CarShowroom> findAll() throws DaoException {
+    public List<CarShowroom> findAllWithEntityGraph() throws DaoException {
         try (Session session = HibernateUtil.getSession();
              EntityManager entityManager = session.getEntityManagerFactory().createEntityManager()) {
             Transaction transaction = session.beginTransaction();
@@ -29,6 +34,25 @@ public class CarShowroomDaoImpl implements CarShowroomDao {
             List<CarShowroom> carShowrooms = session
                     .createQuery("FROM CarShowroom", CarShowroom.class)
                     .setHint("javax.persistence.fetchgraph", entityGraph)
+                    .getResultList();
+            transaction.commit();
+            return carShowrooms;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<CarShowroom> findAllWithJoinFetch() throws DaoException {
+        try (Session session = HibernateUtil.getSession()) {
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<CarShowroom> criteriaQuery = criteriaBuilder.createQuery(CarShowroom.class);
+            Root<CarShowroom> root = criteriaQuery.from(CarShowroom.class);
+            Fetch<Object, Object> cars = root.fetch("cars", JoinType.LEFT);
+            cars.fetch("category", JoinType.LEFT);
+            List<CarShowroom> carShowrooms = session
+                    .createQuery(criteriaQuery)
                     .getResultList();
             transaction.commit();
             return carShowrooms;

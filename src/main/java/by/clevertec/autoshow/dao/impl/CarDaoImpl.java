@@ -74,6 +74,24 @@ public class CarDaoImpl implements CarDao {
         }
     }
 
+    @Override
+    public List<Car> findAllCars(int pageNumber, int pageSize) throws DaoException {
+
+        try (Session session = HibernateUtil.getSession()) {
+            Transaction transaction = session.beginTransaction();
+            CriteriaQuery<Car> criteriaQuery = session.getCriteriaBuilder().createQuery(Car.class);
+            criteriaQuery.from(Car.class);
+            Query<Car> query = session.createQuery(criteriaQuery);
+            query.setFirstResult((pageNumber - 1) * pageSize);
+            query.setMaxResults(pageSize);
+            List<Car> cars = query.getResultList();
+            transaction.commit();
+            return cars;
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
     private List<Predicate> createPredicates(CriteriaBuilder criteriaBuilder, Root<Car> root,
                                              String brand, String category, int year, double minPrice, double maxPrice) {
         List<Predicate> predicates = new ArrayList<>();
