@@ -16,6 +16,11 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
+        <!-- Hibernate cache 2 level -->
+        <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletEhCacheProvider</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+
         <!-- Auto schema creation -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 

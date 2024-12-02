@@ -2,6 +2,8 @@ package by.clevertec.autoshow.dao;
 
 import by.clevertec.autoshow.entity.Car;
 import by.clevertec.autoshow.exception.DaoException;
+import jakarta.persistence.QueryHint;
+import org.hibernate.jpa.AvailableHints;
 
 import java.util.List;
 

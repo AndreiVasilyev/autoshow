@@ -1,5 +1,6 @@
 package by.clevertec.autoshow.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +39,7 @@ import java.util.List;
         subgraphs = @NamedSubgraph(name = "carWithCategory",
                 attributeNodes = @NamedAttributeNode("category"))
 )
+@Cacheable
 public class CarShowroom {
 
     @Id

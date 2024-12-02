@@ -2,8 +2,10 @@ package by.clevertec.autoshow.dao;
 
 import by.clevertec.autoshow.exception.DaoException;
 import by.clevertec.autoshow.util.HibernateUtil;
+import jakarta.persistence.QueryHint;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.jpa.AvailableHints;
 
 import java.util.List;
 
