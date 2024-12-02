@@ -55,6 +55,7 @@ public class Client {
     @CollectionTable(name = "contacts", joinColumns = @JoinColumn(name = "client_id"))
     @Column(name = "contact")
     @Builder.Default
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<String> contacts = new HashSet<>();
 
     @Column(name = "registered")
@@ -70,11 +71,13 @@ public class Client {
     )
     @Builder.Default
     @ToString.Exclude
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Car> cars = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @Builder.Default
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Review> reviews = new ArrayList<>();
 
 
