@@ -1,0 +1,261 @@
+databaseChangeLog:
+- changeSet:
+    id: 1733853710528-1
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: car_showrooms_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: address
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: car_showrooms
+- changeSet:
+    id: 1733853710528-2
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: cars_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: brand
+            type: VARCHAR(255)
+        - column:
+            name: model
+            type: VARCHAR(255)
+        - column:
+            name: price
+            type: numeric(38, 2)
+        - column:
+            name: year
+            type: INTEGER
+        - column:
+            name: car_showroom_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: category_id
+            type: BIGINT
+        tableName: cars
+- changeSet:
+    id: 1733853710528-3
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: categories_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: categories
+- changeSet:
+    id: 1733853710528-4
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: clients_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: registered
+            type: TIMESTAMP WITHOUT TIME ZONE
+        tableName: clients
+- changeSet:
+    id: 1733853710528-5
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: client_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: car_id
+            type: BIGINT
+        tableName: clients_cars
+- changeSet:
+    id: 1733853710528-6
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: client_id
+            type: BIGINT
+        - column:
+            name: contact
+            type: VARCHAR(255)
+        tableName: contacts
+- changeSet:
+    id: 1733853710528-7
+    author: spiralscout (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: reviews_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: rate
+            type: INTEGER
+        - column:
+            name: text
+            type: VARCHAR(255)
+        - column:
+            name: car_id
+            type: BIGINT
+        - column:
+            name: client_id
+            type: BIGINT
+        tableName: reviews
+- changeSet:
+    id: 1733853710528-8
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: category_id
+        baseTableName: cars
+        constraintName: fk310labqcoawyj05t4gvvfjbg9
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: categories
+        validate: true
+- changeSet:
+    id: 1733853710528-9
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: car_showroom_id
+        baseTableName: cars
+        constraintName: fk61f057ya8mmhgi7vebrnwappq
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: car_showrooms
+        validate: true
+- changeSet:
+    id: 1733853710528-10
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: client_id
+        baseTableName: contacts
+        constraintName: fk94mnsowcdm8tow68ha3xudt48
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: clients
+        validate: true
+- changeSet:
+    id: 1733853710528-11
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: car_id
+        baseTableName: reviews
+        constraintName: fkieeb3p5v84i1xja7nbj1vkkeg
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: cars
+        validate: true
+- changeSet:
+    id: 1733853710528-12
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: car_id
+        baseTableName: clients_cars
+        constraintName: fkitgnt28txljncdrlgminsnnnp
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: cars
+        validate: true
+- changeSet:
+    id: 1733853710528-13
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: client_id
+        baseTableName: reviews
+        constraintName: fko2cmyvyjrvumg4b3de9dcvfxa
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: clients
+        validate: true
+- changeSet:
+    id: 1733853710528-14
+    author: spiralscout (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: client_id
+        baseTableName: clients_cars
+        constraintName: fkowe5i1db3pemlt7438dick0f0
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: clients
+        validate: true
+

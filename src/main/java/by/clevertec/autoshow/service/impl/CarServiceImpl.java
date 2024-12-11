@@ -10,6 +10,8 @@ import by.clevertec.autoshow.service.CarService;
 
 import java.util.List;
 
+
+
 public class CarServiceImpl implements CarService {
     @Override
     public void addCar(Car car) throws ServiceException {
@@ -71,4 +73,5 @@ public class CarServiceImpl implements CarService {
             throw new ServiceException(e);
         }
     }
+
 }
