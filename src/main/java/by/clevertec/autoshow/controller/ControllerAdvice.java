@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.xml.bind.ValidationException;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler(value = {ServiceException.class,
+            NoSuchElementException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionObject response400(@RequestBody Exception exception) {
         return agregate(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

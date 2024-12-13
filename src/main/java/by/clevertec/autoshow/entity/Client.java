@@ -51,7 +51,7 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "contacts", joinColumns = @JoinColumn(name = "client_id"))
     @Column(name = "contact")
     @Builder.Default

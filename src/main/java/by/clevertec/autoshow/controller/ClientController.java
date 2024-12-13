@@ -1,10 +1,10 @@
 package by.clevertec.autoshow.controller;
 
-import by.clevertec.autoshow.entity.dto.CarCreateDto;
-import by.clevertec.autoshow.entity.dto.CarDto;
-import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
-import by.clevertec.autoshow.entity.dto.CarUpdateDto;
-import by.clevertec.autoshow.service.CarServiceSpring;
+import by.clevertec.autoshow.entity.dto.CarBuyDto;
+import by.clevertec.autoshow.entity.dto.ClientCreateDto;
+import by.clevertec.autoshow.entity.dto.ClientDto;
+import by.clevertec.autoshow.entity.dto.ClientUpdateDto;
+import by.clevertec.autoshow.service.ClientServiceSpring;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -25,47 +25,47 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/cars")
+@RequestMapping("/clients")
 @Validated
-public class CarController {
+public class ClientController {
 
-    private final CarServiceSpring carService;
+    private final ClientServiceSpring clientService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveCar(@RequestBody @Valid CarCreateDto car) {
-        carService.saveCar(car);
+    public void saveClient(@RequestBody @Valid ClientCreateDto client) {
+        clientService.saveClient(client);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CarDto updateCar(@PathVariable("id") @Valid @NotBlank long id,
-                            @RequestBody @Valid CarUpdateDto car) {
-        return carService.updateCar(id, car);
+    public ClientDto updateClient(@PathVariable("id") @Valid @NotBlank long id,
+                                  @RequestBody @Valid ClientUpdateDto client) {
+        return clientService.updateClient(id, client);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CarDto assignCar(@PathVariable("id") @Valid @NotBlank long id,
-                            @RequestBody @Valid @NotBlank CarShowroomAssignDto showroom) {
-        return carService.assignCarToShowroom(id, showroom);
+    public void byCar(@PathVariable("id") @Valid @NotBlank long id,
+                           @RequestBody @Valid @NotBlank CarBuyDto carBuyDto) {
+        clientService.buyCar(id, carBuyDto);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public CarDto getCarByID(@PathVariable("id") @Valid @NotBlank long id) {
-        return carService.findCarById(id);
+    public ClientDto getClientByID(@PathVariable("id") @Valid @NotBlank long id) {
+        return clientService.findClientById(id);
     }
 
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<CarDto> getCars() {
-        return carService.findAllCars();
+    public List<ClientDto> getClients() {
+        return clientService.findAllClients();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCar(@PathVariable("id") @Valid @NotBlank long id) {
-        carService.deleteCarById(id);
+        clientService.deleteClientById(id);
     }
 }

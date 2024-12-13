@@ -54,7 +54,7 @@ public class Car {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", nullable = false)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Category category;

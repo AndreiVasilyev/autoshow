@@ -1,13 +1,21 @@
 package by.clevertec.autoshow.service.impl;
 
-import by.clevertec.autoshow.entity.dto.CarAssignDto;
+import by.clevertec.autoshow.entity.Car;
+import by.clevertec.autoshow.entity.CarShowroom;
+import by.clevertec.autoshow.entity.Category;
 import by.clevertec.autoshow.entity.dto.CarCreateDto;
 import by.clevertec.autoshow.entity.dto.CarDto;
+import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
 import by.clevertec.autoshow.entity.dto.CarUpdateDto;
 import by.clevertec.autoshow.mapper.CarMapper;
+import by.clevertec.autoshow.mapper.CategoryMapper;
 import by.clevertec.autoshow.repository.CarRepository;
+
+import by.clevertec.autoshow.repository.CarShowroomRepository;
+import by.clevertec.autoshow.repository.CategoryRepository;
 import by.clevertec.autoshow.service.CarServiceSpring;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +23,34 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CarServiceSpringImpl implements CarServiceSpring {
 
     private final CarRepository carRepository;
+    private final CategoryRepository categoryRepository;
+    private final CarShowroomRepository carShowroomRepository;
     private final CarMapper carMapper;
+    private final CategoryMapper categoryMapper;
 
-
+    @Transactional
     @Override
-    public void saveCar(CarCreateDto car) {
-        carRepository.save(carMapper.toCar(car));
+    public void saveCar(CarCreateDto carDto) {
+        Category category = categoryRepository.findByName(carDto.category().name());
+        if (category == null) {
+            categoryRepository.save(categoryMapper.toCategory(carDto.category()));
+        }
+        Car car = carMapper.toCar(carDto);
+        car.setCategory(categoryRepository.findByName(carDto.category().name()));
+        carRepository.save(car);
     }
 
     @Override
-    public CarDto assignCarToShowroom(long id, CarAssignDto car) {
-        //TODO create method in repo
-        return null;
+    public CarDto assignCarToShowroom(long id, CarShowroomAssignDto carShowroomDto) {
+        Car car =carRepository.findById(id).orElseThrow();
+        CarShowroom carShowroom=carShowroomRepository.findById(carShowroomDto.id()).orElseThrow();
+        car.setCarShowroom(carShowroom);
+        carRepository.save(car);
+        return carMapper.toCarDto(car);
     }
 
     @Override
@@ -39,7 +60,7 @@ public class CarServiceSpringImpl implements CarServiceSpring {
 
     @Override
     public CarDto findCarById(long id) {
-        return carMapper.toCarDto(carRepository.findById(id).orElse(null));
+        return carMapper.toCarDto(carRepository.findById(id).orElseThrow());
     }
 
     @Override
@@ -49,7 +70,9 @@ public class CarServiceSpringImpl implements CarServiceSpring {
 
     @Transactional
     @Override
-    public CarDto updateCar(long id, CarUpdateDto car) {
-        return carMapper.toCarDto(carRepository.save(carMapper.toCar(car)));
+    public CarDto updateCar(long id, CarUpdateDto carUpdateDto) {
+        Car car = carMapper.toCar(carUpdateDto);
+        car.setId(id);
+        return carMapper.toCarDto(carRepository.save(car));
     }
 }

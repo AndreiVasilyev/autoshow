@@ -1,8 +1,8 @@
 package by.clevertec.autoshow.mapper;
 
 import by.clevertec.autoshow.entity.Car;
-import by.clevertec.autoshow.entity.Category;
 import by.clevertec.autoshow.entity.dto.CarAssignDto;
+import by.clevertec.autoshow.entity.dto.CarBuyDto;
 import by.clevertec.autoshow.entity.dto.CarCreateDto;
 import by.clevertec.autoshow.entity.dto.CarDto;
 import by.clevertec.autoshow.entity.dto.CarUpdateDto;
@@ -22,6 +22,10 @@ public interface CarMapper {
 
     CarUpdateDto carUpdateDto(Car car);
 
+    CarBuyDto toCarBuyDto(Car car);
+
+    Car toCar(CarBuyDto carBuyDto);
+
     Car toCar(CarCreateDto carCreateDto);
 
     Car toCar(CarAssignDto carAssignDto);
@@ -30,13 +34,4 @@ public interface CarMapper {
 
     List<CarDto> toCarDtoList(List<Car> cars);
 
-    default Category toCategory(String categoryDto) {
-        Category category = new Category();
-        category.setName(categoryDto);
-        return category;
-    }
-
-    default String toStringCategory(Category category) {
-        return category.getName();
-    }
 }
