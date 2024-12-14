@@ -1,17 +1,21 @@
 package by.clevertec.autoshow.service;
 
-import by.clevertec.autoshow.entity.Car;
-import by.clevertec.autoshow.entity.Client;
-import by.clevertec.autoshow.entity.Review;
-import by.clevertec.autoshow.exception.ServiceException;
+import by.clevertec.autoshow.entity.dto.ReviewCreateDto;
+import by.clevertec.autoshow.entity.dto.ReviewDto;
+import by.clevertec.autoshow.entity.dto.ReviewUpdateDto;
 
 import java.util.List;
 
 public interface ReviewService {
 
-    void addReview(Client client, Car car, String text, int rate) throws ServiceException;
+    void saveReview(ReviewCreateDto reviewCreateDto);
 
-    List<Review> searchReviews(String keyword) throws ServiceException;
+    List<ReviewDto> findAllReviews();
 
-    List<Review> searchReviews(int rate) throws ServiceException;
+    ReviewDto findReviewById(long id);
+
+    void deleteReviewById(long id);
+
+    ReviewDto updateReview(long id, ReviewUpdateDto reviewUpdateDto);
+
 }

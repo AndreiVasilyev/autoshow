@@ -1,7 +1,6 @@
 package by.clevertec.autoshow.controller;
 
 import by.clevertec.autoshow.exception.ExceptionObject;
-import by.clevertec.autoshow.exception.ServiceException;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,8 +14,8 @@ import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-    @ExceptionHandler(value = {ServiceException.class,
-            NoSuchElementException.class})
+    @ExceptionHandler(value = {NoSuchElementException.class,
+            Exception.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionObject response400(@RequestBody Exception exception) {
         return agregate(exception.getMessage(), HttpStatus.BAD_REQUEST);

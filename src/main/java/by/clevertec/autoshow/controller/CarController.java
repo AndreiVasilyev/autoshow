@@ -4,7 +4,7 @@ import by.clevertec.autoshow.entity.dto.CarCreateDto;
 import by.clevertec.autoshow.entity.dto.CarDto;
 import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
 import by.clevertec.autoshow.entity.dto.CarUpdateDto;
-import by.clevertec.autoshow.service.CarServiceSpring;
+import by.clevertec.autoshow.service.CarService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.List;
 @Validated
 public class CarController {
 
-    private final CarServiceSpring carService;
+    private final CarService carService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

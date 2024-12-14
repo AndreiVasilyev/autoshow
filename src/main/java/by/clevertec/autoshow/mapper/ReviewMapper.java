@@ -11,17 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
 
-    Review toReview(ReviewDto reviewDto);
-
     ReviewDto toReviewDto(Review review);
 
     Review toReview(ReviewCreateDto reviewCreateDto);
 
-    ReviewCreateDto toReviewCreateDto(Review review);
-
     Review toReview(ReviewUpdateDto reviewUpdateDto);
-
-    ReviewUpdateDto toReviewUpdateDto(Review review);
 
     List<ReviewDto> toReviewDtoList(List<Review> reviews);
 

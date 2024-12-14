@@ -1,4 +1,7 @@
 package by.clevertec.autoshow.entity.dto;
 
-public record ReviewDto(String id, String text, String rate) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+public record ReviewDto(@NotBlank @Positive String id, String text, @Positive String rate) {
 }

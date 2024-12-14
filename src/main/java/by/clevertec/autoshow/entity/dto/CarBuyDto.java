@@ -1,4 +1,7 @@
 package by.clevertec.autoshow.entity.dto;
 
-public record CarBuyDto(String id) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+public record CarBuyDto(@NotBlank @Positive String id) {
 }

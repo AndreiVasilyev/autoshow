@@ -4,7 +4,7 @@ import by.clevertec.autoshow.entity.dto.CarBuyDto;
 import by.clevertec.autoshow.entity.dto.ClientCreateDto;
 import by.clevertec.autoshow.entity.dto.ClientDto;
 import by.clevertec.autoshow.entity.dto.ClientUpdateDto;
-import by.clevertec.autoshow.service.ClientServiceSpring;
+import by.clevertec.autoshow.service.ClientService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.List;
 @Validated
 public class ClientController {
 
-    private final ClientServiceSpring clientService;
+    private final ClientService clientService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,7 +47,7 @@ public class ClientController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void byCar(@PathVariable("id") @Valid @NotBlank long id,
-                           @RequestBody @Valid @NotBlank CarBuyDto carBuyDto) {
+                      @RequestBody @Valid @NotBlank CarBuyDto carBuyDto) {
         clientService.buyCar(id, carBuyDto);
     }
 

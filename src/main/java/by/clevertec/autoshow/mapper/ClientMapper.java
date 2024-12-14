@@ -16,17 +16,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
 
-    @Mapping(source = "registered", target = "registered", qualifiedByName = "stringToLocalDateTime")
-    Client toClient(ClientDto clientDto);
-
     @Mapping(source = "registered", target = "registered", dateFormat = "dd.MM.yyyy")
     ClientDto toClientDto(Client client);
-
-    @Mapping(source = "registered", target = "registered", dateFormat = "dd.MM.yyyy")
-    ClientCreateDto toClientCreateDto(Client client);
-
-    @Mapping(source = "registered", target = "registered", dateFormat = "dd.MM.yyyy")
-    ClientUpdateDto clientUpdateDto(Client client);
 
     @Mapping(source = "registered", target = "registered", qualifiedByName = "stringToLocalDateTime")
     Client toClient(ClientCreateDto clientCreateDto);

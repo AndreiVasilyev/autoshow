@@ -12,23 +12,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CarMapper {
-    Car toCar(CarDto carDto);
 
     CarDto toCarDto(Car car);
 
-    CarCreateDto toCarCreateDto(Car car);
-
-    CarAssignDto toCarAssignDto(Car car);
-
-    CarUpdateDto carUpdateDto(Car car);
-
-    CarBuyDto toCarBuyDto(Car car);
-
-    Car toCar(CarBuyDto carBuyDto);
-
     Car toCar(CarCreateDto carCreateDto);
-
-    Car toCar(CarAssignDto carAssignDto);
 
     Car toCar(CarUpdateDto carUpdateDto);
 

@@ -3,7 +3,7 @@ package by.clevertec.autoshow.controller;
 import by.clevertec.autoshow.entity.dto.ReviewCreateDto;
 import by.clevertec.autoshow.entity.dto.ReviewDto;
 import by.clevertec.autoshow.entity.dto.ReviewUpdateDto;
-import by.clevertec.autoshow.service.ReviewServiceSpring;
+import by.clevertec.autoshow.service.ReviewService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.util.List;
 @Validated
 public class ReviewController {
 
-    private final ReviewServiceSpring reviewService;
+    private final ReviewService reviewService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

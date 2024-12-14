@@ -1,54 +1,66 @@
 package by.clevertec.autoshow.service.impl;
 
-import by.clevertec.autoshow.dao.ClientDao;
-import by.clevertec.autoshow.dao.ReviewDao;
-import by.clevertec.autoshow.dao.impl.ClientDaoImpl;
-import by.clevertec.autoshow.dao.impl.ReviewDaoImpl;
 import by.clevertec.autoshow.entity.Car;
 import by.clevertec.autoshow.entity.Client;
 import by.clevertec.autoshow.entity.Review;
-import by.clevertec.autoshow.exception.DaoException;
-import by.clevertec.autoshow.exception.ServiceException;
+import by.clevertec.autoshow.entity.dto.ReviewCreateDto;
+import by.clevertec.autoshow.entity.dto.ReviewDto;
+import by.clevertec.autoshow.entity.dto.ReviewUpdateDto;
+import by.clevertec.autoshow.mapper.ReviewMapper;
+import by.clevertec.autoshow.repository.CarRepository;
+import by.clevertec.autoshow.repository.ClientRepository;
+import by.clevertec.autoshow.repository.ReviewRepository;
 import by.clevertec.autoshow.service.ReviewService;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
+    private final ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
+    private final CarRepository carRepository;
+    private final ClientRepository clientRepository;
+
     @Override
-    public void addReview(Client client, Car car, String text, int rate) throws ServiceException {
-        ReviewDao reviewDao = ReviewDaoImpl.getInstance();
-        Review review = Review.builder()
-                .text(text)
-                .rate(rate)
-                .car(car)
-                .client(client)
-                .build();
-        try {
-            reviewDao.save(review);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public void saveReview(ReviewCreateDto reviewCreateDto) {
+        Review review = reviewMapper.toReview(reviewCreateDto);
+        Car car = carRepository.findById(Long.valueOf(reviewCreateDto.carId())).orElseThrow();
+        Client client = clientRepository.findById(Long.valueOf(reviewCreateDto.clientId())).orElseThrow();
+        review.setCar(car);
+        review.setClient(client);
+        reviewRepository.save(review);
+    }
+
+
+    @Override
+    public List<ReviewDto> findAllReviews() {
+        return reviewMapper.toReviewDtoList(reviewRepository.findAll());
     }
 
     @Override
-    public List<Review> searchReviews(String keyword) throws ServiceException {
-        ReviewDao reviewDao = ReviewDaoImpl.getInstance();
-        try {
-            return reviewDao.findByText(keyword);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public ReviewDto findReviewById(long id) {
+        return reviewMapper.toReviewDto(reviewRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public List<Review> searchReviews(int rate) throws ServiceException {
-        ReviewDao reviewDao = ReviewDaoImpl.getInstance();
-        try {
-            return reviewDao.findByRate(rate);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public void deleteReviewById(long id) {
+        reviewRepository.deleteById(id);
     }
+
+    @Override
+    public ReviewDto updateReview(long id, ReviewUpdateDto reviewUpdateDto) {
+        Review review = reviewMapper.toReview(reviewUpdateDto);
+        review.setId(id);
+        Car car = carRepository.findById(Long.valueOf(reviewUpdateDto.carId())).orElseThrow();
+        Client client = clientRepository.findById(Long.valueOf(reviewUpdateDto.clientId())).orElseThrow();
+        review.setCar(car);
+        review.setClient(client);
+        return reviewMapper.toReviewDto(reviewRepository.save(review));
+    }
+
+
 }

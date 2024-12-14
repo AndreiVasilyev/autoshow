@@ -1,22 +1,25 @@
 package by.clevertec.autoshow.service;
 
-import by.clevertec.autoshow.entity.Car;
-import by.clevertec.autoshow.entity.CarShowroom;
-import by.clevertec.autoshow.exception.ServiceException;
+import by.clevertec.autoshow.entity.dto.CarAssignDto;
+import by.clevertec.autoshow.entity.dto.CarCreateDto;
+import by.clevertec.autoshow.entity.dto.CarDto;
+import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
+import by.clevertec.autoshow.entity.dto.CarUpdateDto;
 
 import java.util.List;
 
 public interface CarService {
 
-    void addCar(Car car) throws ServiceException;
+    void saveCar(CarCreateDto car) ;
 
-    List<Car> findCarsByFilters(String brand, String category, int year, double minPrice, double maxPrice) throws ServiceException;
+    CarDto assignCarToShowroom(long id, CarShowroomAssignDto carShowroom);
 
-    void assignCarToShowroom(Car car, CarShowroom carShowroom) throws ServiceException;
+    List<CarDto> findAllCars() ;
 
-    List<Car> findAllCarsOrderByPriceAsc() throws ServiceException;
+    CarDto findCarById(long id) ;
 
-    List<Car> findAllCarsOrderByPriceDesc() throws ServiceException;
+    void deleteCarById(long id) ;
 
-    List<Car> findAllCars(int pageNumber, int pageSize) throws ServiceException;
+    CarDto updateCar(long id, CarUpdateDto car);
+
 }

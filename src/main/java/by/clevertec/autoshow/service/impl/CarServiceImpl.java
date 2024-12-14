@@ -1,77 +1,78 @@
 package by.clevertec.autoshow.service.impl;
 
-import by.clevertec.autoshow.dao.CarDao;
-import by.clevertec.autoshow.dao.impl.CarDaoImpl;
 import by.clevertec.autoshow.entity.Car;
 import by.clevertec.autoshow.entity.CarShowroom;
-import by.clevertec.autoshow.exception.DaoException;
-import by.clevertec.autoshow.exception.ServiceException;
+import by.clevertec.autoshow.entity.Category;
+import by.clevertec.autoshow.entity.dto.CarCreateDto;
+import by.clevertec.autoshow.entity.dto.CarDto;
+import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
+import by.clevertec.autoshow.entity.dto.CarUpdateDto;
+import by.clevertec.autoshow.mapper.CarMapper;
+import by.clevertec.autoshow.mapper.CategoryMapper;
+import by.clevertec.autoshow.repository.CarRepository;
+
+import by.clevertec.autoshow.repository.CarShowroomRepository;
+import by.clevertec.autoshow.repository.CategoryRepository;
 import by.clevertec.autoshow.service.CarService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
-
+@Service
+@RequiredArgsConstructor
+@Slf4j
 public class CarServiceImpl implements CarService {
+
+    private final CarRepository carRepository;
+    private final CategoryRepository categoryRepository;
+    private final CarShowroomRepository carShowroomRepository;
+    private final CarMapper carMapper;
+    private final CategoryMapper categoryMapper;
+
+    @Transactional
     @Override
-    public void addCar(Car car) throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
-        try {
-            carDao.save(car);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
+    public void saveCar(CarCreateDto carDto) {
+        Category category = categoryRepository.findByName(carDto.category().name());
+        if (category == null) {
+            categoryRepository.save(categoryMapper.toCategory(carDto.category()));
         }
+        Car car = carMapper.toCar(carDto);
+        car.setCategory(categoryRepository.findByName(carDto.category().name()));
+        carRepository.save(car);
     }
 
     @Override
-    public List<Car> findCarsByFilters(String brand, String category, int year, double minPrice, double maxPrice) throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
-        try {
-            return carDao.findCarsByFilters(brand, category, year, minPrice, maxPrice);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void assignCarToShowroom(Car car, CarShowroom carShowroom) throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
+    public CarDto assignCarToShowroom(long id, CarShowroomAssignDto carShowroomDto) {
+        Car car =carRepository.findById(id).orElseThrow();
+        CarShowroom carShowroom=carShowroomRepository.findById(carShowroomDto.id()).orElseThrow();
         car.setCarShowroom(carShowroom);
-        try {
-            carDao.update(car);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+        carRepository.save(car);
+        return carMapper.toCarDto(car);
     }
 
     @Override
-    public List<Car> findAllCarsOrderByPriceAsc() throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
-        try {
-            return carDao.findAllCarsOrderByPriceAsc();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public List<CarDto> findAllCars() {
+        return carMapper.toCarDtoList(carRepository.findAll());
     }
 
     @Override
-    public List<Car> findAllCarsOrderByPriceDesc() throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
-        try {
-            return carDao.findAllCarsOrderByPriceDesc();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public CarDto findCarById(long id) {
+        return carMapper.toCarDto(carRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public List<Car> findAllCars(int pageNumber, int pageSize) throws ServiceException {
-        CarDao carDao = CarDaoImpl.getInstance();
-        try {
-            return carDao.findAllCars(pageNumber, pageSize);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public void deleteCarById(long id) {
+        carRepository.deleteById(id);
     }
 
+    @Transactional
+    @Override
+    public CarDto updateCar(long id, CarUpdateDto carUpdateDto) {
+        Car car = carMapper.toCar(carUpdateDto);
+        car.setId(id);
+        return carMapper.toCarDto(carRepository.save(car));
+    }
 }

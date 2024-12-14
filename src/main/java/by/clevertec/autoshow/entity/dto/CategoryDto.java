@@ -1,4 +1,7 @@
 package by.clevertec.autoshow.entity.dto;
 
-public record CategoryDto(Long id, String name) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+public record CategoryDto(@NotBlank @Positive Long id, String name) {
 }
