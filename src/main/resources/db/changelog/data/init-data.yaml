@@ -1,0 +1,189 @@
+databaseChangeLog:
+    - changeSet:
+          id: 1733857397866-1
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: id
+                              name: id
+                              type: NUMERIC
+                        - column:
+                              header: address
+                              name: address
+                              type: STRING
+                        - column:
+                              header: name
+                              name: name
+                              type: STRING
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/car_showrooms.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: car_showrooms
+    - changeSet:
+        id: 1733857397866-2
+        author: spiralscout (generated)
+        changes:
+          - loadData:
+              columns:
+                - column:
+                    header: id
+                    name: id
+                    type: NUMERIC
+                - column:
+                    header: name
+                    name: name
+                    type: STRING
+              commentLineStartsWith: '#'
+              encoding: UTF-8
+              file: data/categories.csv
+              quotchar: '"'
+              separator: ','
+              relativeToChangelogFile: true
+              tableName: categories
+    - changeSet:
+          id: 1733857397866-3
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: id
+                              name: id
+                              type: NUMERIC
+                        - column:
+                              header: brand
+                              name: brand
+                              type: STRING
+                        - column:
+                              header: model
+                              name: model
+                              type: STRING
+                        - column:
+                              header: price
+                              name: price
+                              type: NUMERIC
+                        - column:
+                              header: year
+                              name: year
+                              type: NUMERIC
+                        - column:
+                              header: car_showroom_id
+                              name: car_showroom_id
+                              type: NUMERIC
+                        - column:
+                              header: category_id
+                              name: category_id
+                              type: NUMERIC
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/cars.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: cars
+    - changeSet:
+          id: 1733857397866-4
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: id
+                              name: id
+                              type: NUMERIC
+                        - column:
+                              header: name
+                              name: name
+                              type: STRING
+                        - column:
+                              header: registered
+                              name: registered
+                              type: DATE
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/clients.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: clients
+    - changeSet:
+          id: 1733857397866-5
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: client_id
+                              name: client_id
+                              type: NUMERIC
+                        - column:
+                              header: car_id
+                              name: car_id
+                              type: NUMERIC
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/clients_cars.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: clients_cars
+    - changeSet:
+          id: 1733857397866-6
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: client_id
+                              name: client_id
+                              type: NUMERIC
+                        - column:
+                              header: contact
+                              name: contact
+                              type: STRING
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/contacts.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: contacts
+    - changeSet:
+          id: 1733857397866-7
+          author: spiralscout (generated)
+          changes:
+              - loadData:
+                    columns:
+                        - column:
+                              header: id
+                              name: id
+                              type: NUMERIC
+                        - column:
+                              header: rate
+                              name: rate
+                              type: NUMERIC
+                        - column:
+                              header: text
+                              name: text
+                              type: STRING
+                        - column:
+                              header: car_id
+                              name: car_id
+                              type: NUMERIC
+                        - column:
+                              header: client_id
+                              name: client_id
+                              type: NUMERIC
+                    commentLineStartsWith: '#'
+                    encoding: UTF-8
+                    file: data/reviews.csv
+                    quotchar: '"'
+                    separator: ','
+                    relativeToChangelogFile: true
+                    tableName: reviews
+
