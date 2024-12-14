@@ -1,6 +1,5 @@
 package by.clevertec.autoshow.entity;
 
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -24,7 +23,6 @@ import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,8 +37,6 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Builder
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Cacheable
 public class Client {
 
     @Id

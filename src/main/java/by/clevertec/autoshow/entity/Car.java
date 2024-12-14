@@ -1,6 +1,5 @@
 package by.clevertec.autoshow.entity;
 
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +33,6 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Builder
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Cacheable
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import by.clevertec.autoshow.entity.dto.CarShowroomAssignDto;
 import by.clevertec.autoshow.entity.dto.CarUpdateDto;
 import by.clevertec.autoshow.mapper.CarMapper;
 import by.clevertec.autoshow.mapper.CategoryMapper;
+import by.clevertec.autoshow.postprocessor.InjectParamsLogging;
 import by.clevertec.autoshow.repository.CarRepository;
 
 import by.clevertec.autoshow.repository.CarShowroomRepository;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@InjectParamsLogging
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;

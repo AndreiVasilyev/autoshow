@@ -1,6 +1,5 @@
 package by.clevertec.autoshow.entity;
 
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -31,8 +28,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 @ToString
 @Builder
 @Indexed
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Cacheable
 public class Review {
 
     @Id
@@ -51,12 +46,10 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "client_id")
     @ToString.Exclude
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Client client;
 
     @ManyToOne
     @JoinColumn(name = "car_id")
     @ToString.Exclude
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Car car;
 }

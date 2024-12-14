@@ -8,11 +8,11 @@ import by.clevertec.autoshow.entity.dto.ClientCreateDto;
 import by.clevertec.autoshow.entity.dto.ClientDto;
 import by.clevertec.autoshow.entity.dto.ClientUpdateDto;
 import by.clevertec.autoshow.mapper.ClientMapper;
+import by.clevertec.autoshow.postprocessor.InjectParamsLogging;
 import by.clevertec.autoshow.repository.CarRepository;
 import by.clevertec.autoshow.repository.ClientRepository;
 import by.clevertec.autoshow.service.ClientService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -47,6 +46,7 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toClientDtoList(clientRepository.findAll());
     }
 
+    @InjectParamsLogging
     @Override
     public ClientDto findClientById(long id) {
         return clientMapper.toClientDto(clientRepository.findById(id).orElseThrow());
